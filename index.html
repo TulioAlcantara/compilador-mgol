@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compilador</title>
+
+    <!-- BOOTSTRAP CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- FONT AWESOME CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+    <!-- GOOGLE FONTS -->
+    <link href='https://fonts.googleapis.com/css?family=DM Mono' rel='stylesheet'>
+
+    <!-- COMPILADOR CSS -->
+    <link rel="stylesheet" href="/styles/index.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="card mt-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">
+                            <h3 class=" card-title" id="typed-strings">
+                                <i class="fas fa-terminal" aria-hidden="true"></i> Compilador Mgol</h3>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-primary text-center float-right ml-1">
+                                <i class="fas fa-power-off" aria-hidden="true"></i>
+                                Compilar</button>
+                            <button type="button" class="btn btn-success text-center float-right">
+                                <i class="fas fa-upload" aria-hidden="true"></i>
+                                Upload</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h5 class="text-center">Código fonte</h5>
+                                <textarea rows="10" class="form-control w-100" id="input-codigo-fonte">
+                        </textarea>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <h5 class="text-center">Output</h5>
+                                <textarea rows="10" readonly class="form-control w-100" id="output-codigo-fonte">
+                        </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card mt-3 d-none">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-table mr-2"></i>Tabela Léxica</h3>
+            </div>
+            <div class="card-body">
+                <table id="tabela-lexica" class="table-dark table">
+                    <thead>
+                        <th class="">
+                            <h5>Lexema</h5>
+                        </th>
+                        <th class="">
+                            <h5>Token</h5>
+                        </th>
+                        <th class="">
+                            <h5>Tipo</h5>
+                        </th>
+                    </thead>
+                    <tbody id="tabela-lexica-body">
+                        <tr>
+                            <th>teste</th>
+                            <th>teste</th>
+                            <th>teste</th>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col">
+                <h3>Sobre</h3>
+                <p>
+                    <p>Compilador da linguagem fictícia "Mgol", documentada neste <a href=#>link</a></p>
+                    <p>Criado para a disciplina de Compiladores do curso de Ciências da Computação da Universidade Federal de Goiás</p>
+                    <p>Por Túlio Alcântara Magalhães.</p>
+                </p>
+            </div>
+        </div>
+
+</body>
+
+<!-- BOOTSTRAP JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<!-- TYPED JS -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script> -->
+
+<!-- COMPILADOR JS -->
+<script src="/scripts/index.js"></script>
+<!-- <script src="/analisadores/lexico.js"></script>
+<script src="/tabelas/simbolos.js"></script> -->
+
+</html>
