@@ -30,12 +30,15 @@
                                 <i class="fas fa-terminal" aria-hidden="true"></i> Compilador Mgol</h3>
                         </div>
                         <div class="col">
-                            <button type="button" class="btn btn-primary text-center float-right ml-1">
+                            <button id="btn-compilar" type="button" class="btn btn-primary float-right ml-1">
                                 <i class="fas fa-power-off" aria-hidden="true"></i>
                                 Compilar</button>
-                            <button type="button" class="btn btn-success text-center float-right">
+                            <button id="btn-upload" type="button" class="btn btn-success float-right ml-1">
                                 <i class="fas fa-upload" aria-hidden="true"></i>
                                 Upload</button>
+                            <button id="btn-limpar" type="button" class="btn btn-danger float-right ">
+                                <i class="fas fa-trash" aria-hidden="true"></i>
+                                Limpar</button>
                         </div>
                     </div>
                 </div>
@@ -45,15 +48,13 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <h5 class="text-center">Código fonte</h5>
-                                <textarea rows="10" class="form-control w-100" id="input-codigo-fonte">
-                        </textarea>
+                                <textarea rows="10" class="form-control w-100" id="input-codigo-fonte" spellcheck="false"></textarea>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <h5 class="text-center">Output</h5>
-                                <textarea rows="10" readonly class="form-control w-100" id="output-codigo-fonte">
-                        </textarea>
+                                <textarea rows="10" readonly class="form-control w-100" id="output-codigo-fonte" spellcheck="false"></textarea>
                             </div>
                         </div>
                     </div>
@@ -62,7 +63,7 @@
         </div>
 
 
-        <div class="card mt-3 d-none">
+        <div id="card-tabela-lexica" class="card mt-3 d-none">
             <div class="card-header">
                 <h3 class="card-title"><i class="fas fa-table mr-2"></i>Tabela Léxica</h3>
             </div>
@@ -113,8 +114,7 @@
 <!-- <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script> -->
 
 <!-- COMPILADOR JS -->
-<script src="/scripts/index.js"></script>
-<!-- <script src="/analisadores/lexico.js"></script>
-<script src="/tabelas/simbolos.js"></script> -->
+<script type="module" src="/scripts/index.js"></script>
+
 
 </html>
