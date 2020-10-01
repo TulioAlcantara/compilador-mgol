@@ -1,4 +1,4 @@
-import { analisadorLexico } from "./lexico/lexico.js";
+import analisadorLexico from "./lexico/lexico.js";
 
 window.onload = function() {
     document
@@ -19,9 +19,10 @@ window.onload = function() {
 };
 
 const compilador = () => {
+    document.getElementById("tabela-lexica-body").innerHTML = "";
     const codigoFonte = document.getElementById("input-codigo-fonte").value;
-    document.querySelector("#output-codigo-fonte").value = "";
     let tabelaLexica = analisadorLexico(codigoFonte);
+    document.querySelector("#output-codigo-fonte").value += `${retornaHoraAtual()} - Analise léxica concluída\n`;
 };
 
 const leituraUpload = () => {
@@ -32,4 +33,9 @@ const limpaTela = () => {
     document.getElementById("input-codigo-fonte").value = "";
     document.getElementById("output-codigo-fonte").value = "";
     document.getElementById("card-tabela-lexica").classList.add("d-none");
+    document.getElementById("tabela-lexica-body").innerHTML = "";
+};
+
+export const retornaHoraAtual = () => {
+    return new Date().toLocaleTimeString();
 };

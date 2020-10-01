@@ -1,56 +1,110 @@
-export default class AutomatoFinitoDeterministico {
+class AutomatoFinitoDeterministico {
     tabelaTransicao = [];
     estadosAceitacao = [];
     estadosNegacao = [];
     regNumero = new RegExp("^[0-9]$");
     regAlfabeto = new RegExp("^[A-Za-z]$");
+    // regLiteralComentario = new RegExp('([^"]|}")*');
+    regLiteralComentario = new RegExp('.*');
+
 
     constructor() {
         this.criaTabelaTransicao();
     }
 
     criaTabelaTransicao() {
-        this.tabelaTransicao[[0, ">"]] = [10, true, ""];
-        this.tabelaTransicao[[10, "="]] = [3, true, ""];
+        //WHITESPACE E QUEBRA DE LINHA
+        this.tabelaTransicao[[0, " "]] = [30, false, ""];
+        this.tabelaTransicao[[0, "\n"]] = [30, false, ""];
 
-        this.tabelaTransicao[[0, "<"]] = [9, true, ""];
-        this.tabelaTransicao[[9, ">"]] = [2, true, ""];
-        this.tabelaTransicao[[9, "="]] = [1, true, ""];
-        this.tabelaTransicao[[9, "-"]] = [6, true, ""];
+        //OPERADORES DE COMPARAÇÃO
+        this.tabelaTransicao[[0, ">"]] = [10, true, "OPR"];
+        this.tabelaTransicao[[10, "="]] = [3, true, "OPR"];
+        this.tabelaTransicao[[0, "<"]] = [9, true, "OPR"];
+        this.tabelaTransicao[[9, ">"]] = [2, true, "OPR"];
+        this.tabelaTransicao[[9, "="]] = [1, true, "OPR"];
+        this.tabelaTransicao[[0, "="]] = [8, true, "OPR"];
 
-        this.tabelaTransicao[[0, "="]] = [8, true, ""];
+        //OPERADOR DE ATRIBUIÇÃO
+        this.tabelaTransicao[[9, "-"]] = [6, true, "RCB"];
 
-        this.tabelaTransicao[[0, "-"]] = [12, true, ""];
-        this.tabelaTransicao[[0, "+"]] = [12, true, ""];
-        this.tabelaTransicao[[0, "*"]] = [12, true, ""];
-        this.tabelaTransicao[[0, "/"]] = [12, true, ""];
+        //OPERADORES ARITMETICOS
+        this.tabelaTransicao[[0, "-"]] = [12, true, "OPM"];
+        this.tabelaTransicao[[0, "+"]] = [12, true, "OPM"];
+        this.tabelaTransicao[[0, "*"]] = [12, true, "OPM"];
+        this.tabelaTransicao[[0, "/"]] = [12, true, "OPM"];
 
-        this.tabelaTransicao[[0, "EOF"]] = [16, true, ""];
+        //EOF
+        this.tabelaTransicao[[0, "EOF"]] = [16, true, "EOF"];
 
-        this.tabelaTransicao[[0, ";"]] = [6, true, ""];
+        //PONTO E VIRGULA
+        this.tabelaTransicao[[0, ";"]] = [6, true, "PT_V"];
 
-        this.tabelaTransicao[[0, "("]] = [6, true, ""];
+        //PARENTESES
+        this.tabelaTransicao[[0, "("]] = [6, true, "AB_P"];
+        this.tabelaTransicao[[0, ")"]] = [6, true, "FC_P"];
 
-        this.tabelaTransicao[[0, ")"]] = [6, true, ""];
+        //IDENTIFICADOR OU PALAVRA RESERVADA
+        this.tabelaTransicao[[0, "a"]] = [23, true, "id"];
+        this.tabelaTransicao[[23, "a"]] = [23, true, "id"];
+        this.tabelaTransicao[[23, "0"]] = [23, true, "id"];
+        this.tabelaTransicao[[23, "_"]] = [23, true, "id"];
 
-        this.tabelaTransicao[[0, "a"]] = [23, true, ""];
+        //COMENTÁRIO
+        this.tabelaTransicao[[0, "{"]] = [20, false, ""];
+        this.tabelaTransicao[[20, "l"]] = [20, false, ""]; //AQUI FALTA UM LITERAL DE QUALQUER SÍMBOLO
+        this.tabelaTransicao[[20, "}"]] = [22, true, "Comentario"];
+
+        //CONSTANTE LITERAL
+        this.tabelaTransicao[[0, '"']] = [13, true, "Literal"];
+        this.tabelaTransicao[[13, "l"]] = [13, false, ""]; //AQUI FALTA UM LITERAL DE QUALQUER SÍMBOLO
+        this.tabelaTransicao[[13, '"']] = [14, true, "Literal"];
+
+        //CONSTANTE NUMÉRICA
+        this.tabelaTransicao[[0, "0"]] = [7, true, "Num"];
+        this.tabelaTransicao[[7, "0"]] = [7, true, "Num"];
+        this.tabelaTransicao[[7, "."]] = [4, false, ""];
+        this.tabelaTransicao[[4, "0"]] = [5, true, "Num"];
+        this.tabelaTransicao[[4, "0"]] = [5, true, "Num"];
+        this.tabelaTransicao[[5, "0"]] = [5, true, "Num"];
+        // this.tabelaTransicao[[0, "0"]] = [5, true, ""];
+        // this.tabelaTransicao[[5, "0"]] = [5, true, ""];
+        // this.tabelaTransicao[[5, ""]] = [11, true, ""]; //AQUI FALTA O E,e
+        // this.tabelaTransicao[[7, ""]] = [11, true, ""]; //AQUI FALTA O E,e
+        // this.tabelaTransicao[[7, "0"]] = [7, true, ""];
+        // this.tabelaTransicao[[7, "."]] = [4, false, ""];
+        // this.tabelaTransicao[[0, "0"]] = [5, true, ""];
+        // this.tabelaTransicao[[5, "0"]] = [5, true, ""];
     }
 
     comparaEntradaComTabelaTransicao(estado, caracter) {
         let estadoResultado;
-        if (this.regNumero.test(caracter)) {
-            estadoResultado = this.tabelaTransicao[[estado, "a"]];
-            return estadoResultado;
+        //SÓ TRATA LITERAL E COMENTARIO QUANDO ESTIVER DENTRO DE {} OU ""
+        if (
+            caracter != '"' &&
+            caracter != "}" &&
+            this.regLiteralComentario.test(caracter)
+        ) {
+            if ((estado == 20 || estado == 13) && caracter) {
+                estadoResultado = this.tabelaTransicao[[estado, "l"]]; // "l" = CARACTER QUE REPRESENTA LITERAL/COMENTÁRIO
+                return estadoResultado;
+            }
         }
         if (this.regAlfabeto.test(caracter)) {
-            estadoResultado = this.tabelaTransicao[[estado, "0"]];
-            return estadoResultado;
-        } else {
-            estadoResultado = this.tabelaTransicao[[estado, caracter]]
+            estadoResultado = this.tabelaTransicao[[estado, "a"]]; // "a" = CARACTER QUE REPRESENTA LITERAL/COMENTÁRIO
             return estadoResultado;
         }
+        if (this.regNumero.test(caracter)) {
+            estadoResultado = this.tabelaTransicao[[estado, "0"]]; // "0" = CARACTER QUE REPRESENTA LITERAL/COMENTÁRIO
+            return estadoResultado;
+        }
+
+        estadoResultado = this.tabelaTransicao[[estado, caracter]];
+        return estadoResultado;
     }
 }
+
+export default AutomatoFinitoDeterministico;
 
 // adicionaEstadosAceitacao() {
 //     this.estadosAceitacao = [1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 14, 16, 17, 18, 19, 21, 22, 23];
