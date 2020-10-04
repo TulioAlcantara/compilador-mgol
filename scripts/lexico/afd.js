@@ -35,7 +35,7 @@ class AutomatoFinitoDeterministico {
         this.tabelaTransicao[[0, "/"]] = [12, true, "OPM"];
 
         //EOF
-        this.tabelaTransicao[[0, "EOF"]] = [16, true, "EOF"];
+        // this.tabelaTransicao[[0, "EOF"]] = [16, true, "EOF"];
 
         //PONTO E VIRGULA
         this.tabelaTransicao[[0, ";"]] = [6, true, "PT_V"];
@@ -52,12 +52,12 @@ class AutomatoFinitoDeterministico {
 
         //COMENTÁRIO
         this.tabelaTransicao[[0, "{"]] = [20, false, ""];
-        this.tabelaTransicao[[20, "l"]] = [20, false, ""]; //AQUI FALTA UM LITERAL DE QUALQUER SÍMBOLO
-        this.tabelaTransicao[[20, "}"]] = [22, true, "Comentario"];
+        this.tabelaTransicao[[20, "l"]] = [20, false, ""];
+        this.tabelaTransicao[[20, "}"]] = [22, false, "Comentario"];
 
         //CONSTANTE LITERAL
         this.tabelaTransicao[[0, '"']] = [13, true, "Literal"];
-        this.tabelaTransicao[[13, "l"]] = [13, false, ""]; //AQUI FALTA UM LITERAL DE QUALQUER SÍMBOLO
+        this.tabelaTransicao[[13, "l"]] = [13, false, ""];
         this.tabelaTransicao[[13, '"']] = [14, true, "Literal"];
 
         //CONSTANTE NUMÉRICA
@@ -65,16 +65,8 @@ class AutomatoFinitoDeterministico {
         this.tabelaTransicao[[7, "0"]] = [7, true, "Num"];
         this.tabelaTransicao[[7, "."]] = [4, false, ""];
         this.tabelaTransicao[[4, "0"]] = [5, true, "Num"];
-        this.tabelaTransicao[[4, "0"]] = [5, true, "Num"];
         this.tabelaTransicao[[5, "0"]] = [5, true, "Num"];
-        // this.tabelaTransicao[[0, "0"]] = [5, true, ""];
-        // this.tabelaTransicao[[5, "0"]] = [5, true, ""];
-        // this.tabelaTransicao[[5, ""]] = [11, true, ""]; //AQUI FALTA O E,e
-        // this.tabelaTransicao[[7, ""]] = [11, true, ""]; //AQUI FALTA O E,e
-        // this.tabelaTransicao[[7, "0"]] = [7, true, ""];
-        // this.tabelaTransicao[[7, "."]] = [4, false, ""];
-        // this.tabelaTransicao[[0, "0"]] = [5, true, ""];
-        // this.tabelaTransicao[[5, "0"]] = [5, true, ""];
+        //FALTA O EXPONENCIAL
     }
 
     comparaEntradaComTabelaTransicao(estado, caracter) {
@@ -91,11 +83,11 @@ class AutomatoFinitoDeterministico {
             }
         }
         if (this.regAlfabeto.test(caracter)) {
-            estadoResultado = this.tabelaTransicao[[estado, "a"]]; // "a" = CARACTER QUE REPRESENTA LITERAL/COMENTÁRIO
+            estadoResultado = this.tabelaTransicao[[estado, "a"]]; // "a" = CARACTER QUE REPRESENTA QUALQUER LETRA DO ALFABETO
             return estadoResultado;
         }
         if (this.regNumero.test(caracter)) {
-            estadoResultado = this.tabelaTransicao[[estado, "0"]]; // "0" = CARACTER QUE REPRESENTA LITERAL/COMENTÁRIO
+            estadoResultado = this.tabelaTransicao[[estado, "0"]]; // "0" = CARACTER QUE REPRESENTA QUALQUER DIGITO NUMÉRICO
             return estadoResultado;
         }
 
@@ -105,11 +97,3 @@ class AutomatoFinitoDeterministico {
 }
 
 export default AutomatoFinitoDeterministico;
-
-// adicionaEstadosAceitacao() {
-//     this.estadosAceitacao = [1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 14, 16, 17, 18, 19, 21, 22, 23];
-// }
-
-// adicionaEstadosNegacao() {
-//     this.estadosNegacao = [4, 11, 13, 15, 20];
-// }

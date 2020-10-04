@@ -1,6 +1,7 @@
 import obterTabelaSimbolos from "./tabelaSimbolos.js";
 import AutomatoFinitoDeterministico from "./afd.js";
-import { retornaHoraAtual } from "../index.js"
+import { retornaHoraAtual } from "../index.js";
+import tabelaSimbolos from "./tabelaSimbolos.js";
 
 const analisadorLexico = (codigoFonte) => {
     const textoOutput = document.querySelector("#output-codigo-fonte");
@@ -27,8 +28,10 @@ const analisadorLexico = (codigoFonte) => {
     while (indice <= codigoFonte.length) {
         if (breakloop) break;
         if (qtdLeiturasInvalidas == 2) {
-            indice++;
             textoOutput.value += `${retornaHoraAtual()} - ERRO LÉXICO: linha ${linhaAtual}, coluna ${colunaAtual}\n`;
+            indice++;
+            colunaAtual++;
+            qtdLeiturasInvalidas = 0;
             continue;
         }
 
@@ -38,16 +41,23 @@ const analisadorLexico = (codigoFonte) => {
             caracter
         );
 
-        //ENQUANTO RESULTADO DO AUTOMATO É RECONHECIVEL, LEIA
+        //LEITURA DO CARÁCTER RESULTOU EM UM ESTADO RECONHECÍVEL PELO AFD
         if (resultadoAfd) {
-            //ATUALIZA VALORES
             estadoAfd = resultadoAfd[0];
             ehAceitacao = resultadoAfd[1];
             token = resultadoAfd[2];
             lexemaAtual.push(caracter);
+            colunaAtual++;
             indice++;
             qtdLeiturasInvalidas = 0;
-        } else {
+
+            if (caracter == "\n") {
+                linhaAtual++;
+                colunaAtual = 0;
+            }
+        }
+        //LEITURA DO CARÁCTER RESULTOU EM UM ESTADO NÃO RECONHECÍVEL PELO AFD
+        else {
             if (ehUltimoCaracter(indice, codigoFonte, estadoAfd)) {
                 breakloop = true;
             }
@@ -67,9 +77,13 @@ const analisadorLexico = (codigoFonte) => {
                 }
 
                 criaNovaLinhaTabelaLexica(lexemaAtual, token, "");
+                if (token == "id") {
+                    adicionaIdTabelaSimbolos(tabelaSimbolos, lexemaAtual, token, "");
+                }
+
                 estadoAfd = 0;
                 lexemaAtual = [];
-                ehAceitacao = false
+                ehAceitacao = false;
             } else {
                 estadoAfd = 0;
                 lexemaAtual = [];
@@ -79,6 +93,8 @@ const analisadorLexico = (codigoFonte) => {
             }
         }
     }
+
+    return tabelaSimbolos;
 };
 
 const validaCodigoFonte = (codigoFonte) => {
@@ -128,12 +144,23 @@ const comparaLexemaComTabelaSimbolos = (tabelaSimbolos, lexema) => {
 };
 
 const ehUltimoCaracter = (indice, codigoFonte, estadoAfd) => {
-    return indice == codigoFonte.length - 1 && estadoAfd == 0;
+    return indice == codigoFonte.length && estadoAfd == 0;
+};
+
+const adicionaIdTabelaSimbolos = (tabelaSimbolos, lexema, token, tipo) => {
+    //VERIFICA SE O IDENTIFICADOR JÁ EXISTE
+    for (let simbolo of tabelaSimbolos) {
+        if (simbolo.lexema == lexema) {
+            return;
+        }
+    }
+
+    let entrada = {
+        lexema: lexema,
+        token: token,
+        tipo: tipo,
+    };
+    tabelaSimbolos.push(entrada);
 };
 
 export default analisadorLexico;
-
-// const tabelaSimbolos = (estado, caracter) => {
-//     const estadoResutado = comparaEstadoComCaracter(estado, caracter);
-//     return estadoResutado
-// }

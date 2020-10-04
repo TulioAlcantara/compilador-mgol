@@ -29,7 +29,7 @@ const tabelaSimbolos = () => {
     novaEntrada = criaNovaEntrada("fim", "fim", "-");
     tabelaSimbolos.push(novaEntrada);
 
-    novaEntrada = criaNovaEntrada("inteiro", "inicio", "-");
+    novaEntrada = criaNovaEntrada("inteiro", "inteiro", "-");
     tabelaSimbolos.push(novaEntrada);
 
     novaEntrada = criaNovaEntrada("lit", "lit", "-");

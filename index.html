@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compilador</title>
+    <title>Compilador Mgol</title>
 
     <!-- BOOTSTRAP CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -33,9 +33,10 @@
                             <button id="btn-compilar" type="button" class="btn btn-primary float-right ml-1">
                                 <i class="fas fa-power-off" aria-hidden="true"></i>
                                 Compilar</button>
-                            <button id="btn-upload" type="button" class="btn btn-success float-right ml-1">
-                                <i class="fas fa-upload" aria-hidden="true"></i>
-                                Upload</button>
+                            <label id="btn-upload" type="file" class="btn btn-success float-right ml-1">
+                                <input type="file" class="d-none"">
+                            <i class="fas fa-upload" aria-hidden="true"></i> Upload
+                            </label>
                             <button id="btn-limpar" type="button" class="btn btn-danger float-right ">
                                 <i class="fas fa-trash" aria-hidden="true"></i>
                                 Limpar</button>
@@ -63,7 +64,7 @@
         </div>
 
 
-        <div id="card-tabela-lexica" class="card mt-3">
+        <div id="card-tabela-lexica" class="card mt-3 d-none">
             <div class="card-header">
                 <h3 class="card-title mb-0 mt-2"><i class="fas fa-table mr-2"></i>Tabela Léxica</h3>
             </div>

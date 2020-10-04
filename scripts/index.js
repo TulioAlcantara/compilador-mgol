@@ -7,8 +7,8 @@ window.onload = function() {
             compilador();
         });
 
-    document.getElementById("btn-upload").addEventListener("click", function() {
-        leituraUpload();
+    document.getElementById("btn-upload").addEventListener("change", function(event) {
+        uploadArquivo(event);
     });
 
     document.getElementById("btn-limpar").addEventListener("click", function() {
@@ -21,12 +21,9 @@ window.onload = function() {
 const compilador = () => {
     document.getElementById("tabela-lexica-body").innerHTML = "";
     const codigoFonte = document.getElementById("input-codigo-fonte").value;
-    let tabelaLexica = analisadorLexico(codigoFonte);
+    let tabelaSimbolos = analisadorLexico(codigoFonte);
+    console.log(tabelaSimbolos);
     document.querySelector("#output-codigo-fonte").value += `${retornaHoraAtual()} - Analise léxica concluída\n`;
-};
-
-const leituraUpload = () => {
-    console.log("UPLOAD");
 };
 
 const limpaTela = () => {
@@ -35,6 +32,24 @@ const limpaTela = () => {
     document.getElementById("card-tabela-lexica").classList.add("d-none");
     document.getElementById("tabela-lexica-body").innerHTML = "";
 };
+
+const uploadArquivo = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    let codigoFonte;
+
+    let arquivo = event.target.files[0]
+    if (arquivo) {
+        const fileReader = new FileReader();
+
+        fileReader.onload = (event) => {
+            codigoFonte = event.target.result
+            document.getElementById("input-codigo-fonte").value += codigoFonte;
+        };
+
+        fileReader.readAsText(arquivo)
+    }
+}
 
 export const retornaHoraAtual = () => {
     return new Date().toLocaleTimeString();
