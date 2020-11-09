@@ -1,4 +1,4 @@
-export default tabelaSimbolos = () => {
+const tabelaSimbolos = () => {
     let tabelaSimbolos = [];
     let novaEntrada;
 
@@ -50,3 +50,5 @@ const criaNovaEntrada = (lexema, token, tipo) => {
     }
     return entrada;
 }
+
+export default tabelaSimbolos;

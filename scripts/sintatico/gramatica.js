@@ -1,4 +1,4 @@
-export default gramatica = {
+const gramatica = {
     1: ['P*', 'P'],
     2: ['P', 'inicio', 'V', 'A'],
     3: ['V', 'varinicio', 'LV'],
@@ -30,3 +30,5 @@ export default gramatica = {
     29: ['CORPO', 'fimse'],
     30: ['A', 'fim']
 }
+
+export default gramatica;

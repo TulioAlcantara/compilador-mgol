@@ -1,5 +1,5 @@
 import analisadorLexico from "../lexico/lexico.js";
-import gramatica from "./gramatica";
+import gramatica from "./gramatica.js";
 import tabelaSintatica from "./tabelaSintatica.js"
 import { retornaHoraAtual } from "../index.js";
 
@@ -7,6 +7,7 @@ let pilha = [];
 let indice = 0;
 let coluna = 0;
 let linha = 0;
+let codigoFonte = "";
 let entradaLexica = {
   indice: indice,
   coluna: coluna,
@@ -14,29 +15,29 @@ let entradaLexica = {
   codigoFonte: codigoFonte,
 };
 
-export default analisadorSintatico = (codigoFonte) => {
+const analisadorSintatico = (codigoFonte) => {
   let saidaLexica;
   let token;
   pilha.push("$");  
 
-  while(1){
-    saidaLexica = analisadorLexico(entradaLexica);
-    token = saidaLexica.token;
+  // while(1){
+  //   saidaLexica = analisadorLexico(entradaLexica);
+  //   token = saidaLexica.token;
 
-    // CASO SHIFT
-    if(tabelaSintatica[]){}
+  //   // CASO SHIFT
+  //   if(tabelaSintatica[]){}
     
-    // CASO REDUCE
-    else if(tabelaSintatica[]){}
+  //   // CASO REDUCE
+  //   else if(tabelaSintatica[]){}
     
-    // CASO ACCEPT
-    else if(tabelaSintatica[]){}
+  //   // CASO ACCEPT
+  //   else if(tabelaSintatica[]){}
     
-    // CASO ERROR
-    else{
-      modoPanico();
-    }
-  }
+  //   // CASO ERROR
+  //   else{
+  //     modoPanico();
+  //   }
+  // }
 };
 
 const modoPanico = () => {};
@@ -58,3 +59,5 @@ const atualizaEntradaLexica = (saidaLexica) =>{
 //     "#output-codigo-fonte"
 //   ).value += `${retornaHoraAtual()} - Analise léxica concluída\n`;
 // };
+
+export default analisadorSintatico;

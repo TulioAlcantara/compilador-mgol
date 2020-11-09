@@ -1,4 +1,4 @@
-export default tabelaSintatica = () => {
+const tabelaSintatica = () => {
   let tabelaSintatica = [];
 
   tabelaSintatica[(0, "P")] = 1;
@@ -25,7 +25,7 @@ export default tabelaSintatica = () => {
   tabelaSintatica[(4, "varfim")] = "S16";
   tabelaSintatica[(4, "id")] = "S18";
 
-  tabelaSintatica[(5, "?")] = "?";
+  tabelaSintatica[(5, "?")] = "R2";
 
   tabelaSintatica[(6, "CMD")] = 7;
   tabelaSintatica[(6, "COND")] = 8;
@@ -57,7 +57,7 @@ export default tabelaSintatica = () => {
   tabelaSintatica[(8, "id")] = "S12";
   tabelaSintatica[(8, "se")] = "S14";
 
-  tabelaSintatica[(9, "?")] = "?";
+  tabelaSintatica[(9, "?")] = "R30";
 
   tabelaSintatica[(10, ";")] = "S57";
 
@@ -80,9 +80,9 @@ export default tabelaSintatica = () => {
   tabelaSintatica[(14, "num")] = "S40";
   tabelaSintatica[(14, "id")] = "S39";
 
-  tabelaSintatica[(15, "?")] = "?";
+  tabelaSintatica[(15, "?")] = "R3";
 
-  tabelaSintatica[(16, "?")] = "?";
+  tabelaSintatica[(16, "?")] = "R5";
 
   tabelaSintatica[(17, "D")] = 17;
   tabelaSintatica[(17, "LV")] = 26;
@@ -94,14 +94,13 @@ export default tabelaSintatica = () => {
   tabelaSintatica[(18, "real")] = "S34";
   tabelaSintatica[(18, "lit")] = "S35";
 
-  tabelaSintatica[(19, "?")] = "?";
   tabelaSintatica[(19, ";")] = "S56";
 
-  tabelaSintatica[(20, "?")] = "?";
+  tabelaSintatica[(20, "?")] = "R13";
 
-  tabelaSintatica[(21, "?")] = "?";
+  tabelaSintatica[(21, "?")] = "R14";
 
-  tabelaSintatica[(22, "?")] = "?";
+  tabelaSintatica[(22, "?")] = "R15";
 
   //TODO: TRATAR AMBIGUIDADE DE OPRD
   tabelaSintatica[(23, "OPRD")] = 37;
@@ -110,11 +109,11 @@ export default tabelaSintatica = () => {
   tabelaSintatica[(23, "id")] = "S39";
   tabelaSintatica[(23, "num")] = "S40";
 
-  tabelaSintatica[(24, "?")] = "?";
+  tabelaSintatica[(24, "?")] = "R23";
 
-  tabelaSintatica[(25, "?")] = "?";
+  tabelaSintatica[(25, "entao")] = "R44";
 
-  tabelaSintatica[(26, "?")] = "?";
+  tabelaSintatica[(26, "?")] = "R3";
 
   tabelaSintatica[(27, "ES")] = 27;
   tabelaSintatica[(27, "CORPO")] = 47;
@@ -137,66 +136,70 @@ export default tabelaSintatica = () => {
   tabelaSintatica[(29, "escreva")] = "S51";
   tabelaSintatica[(29, "fimse")] = "S50";
 
-  tabelaSintatica[(30, "?")] = "?";
+  tabelaSintatica[(30, "?")] = "R29";
 
-  tabelaSintatica[(31, "?")] = "?";
+  tabelaSintatica[(31, "?")] = "R5";
 
-  tabelaSintatica[(32, "?")] = "?";
+  tabelaSintatica[(32, "?")] = "R6";
 
-  tabelaSintatica[(33, "?")] = "?";
+  tabelaSintatica[(33, "?")] = "R7";
 
-  tabelaSintatica[(34, "?")] = "?";
+  tabelaSintatica[(34, "?")] = "R8";
 
-  tabelaSintatica[(35, "?")] = "?";
+  tabelaSintatica[(35, "?")] = "R9";
 
   tabelaSintatica[(36, ";")] = "S58";
 
-  tabelaSintatica[(38, "?")] = "?";
+  tabelaSintatica[(37, "opm")] = "S41";
 
-  tabelaSintatica[(39, "?")] = "?";
+  tabelaSintatica[(38, "?")] = "R19";
 
-  tabelaSintatica[(40, "?")] = "?";
+  tabelaSintatica[(39, "?")] = "R20";
+
+  tabelaSintatica[(40, "?")] = "R21";
 
   tabelaSintatica[(41, "OPRD")] = 42;
   tabelaSintatica[(41, "id")] = "S39";
   tabelaSintatica[(41, "num")] = "S40";
 
-  tabelaSintatica[(42, "?")] = "?";
+  tabelaSintatica[(42, "?")] = "R18";
 
   tabelaSintatica[(43, "opr")] = "S45";
 
-  tabelaSintatica[(44, "?")] = "?";
+  tabelaSintatica[(44, "?")] = "R24";
 
   tabelaSintatica[(45, "OPRD")] = 46;
   tabelaSintatica[(45, "id")] = "S39";
   tabelaSintatica[(45, "num")] = "S40";
 
-  tabelaSintatica[(46, "?")] = "?";
+  tabelaSintatica[(46, "?")] = "R25";
 
-  tabelaSintatica[(47, "?")] = "?";
+  tabelaSintatica[(47, "?")] = "R26";
 
-  tabelaSintatica[(48, "?")] = "?";
+  tabelaSintatica[(48, "?")] = "R27";
 
-  tabelaSintatica[(49, "?")] = "?";
+  tabelaSintatica[(49, "?")] = "R28";
 
-  tabelaSintatica[(50, "?")] = "?";
+  tabelaSintatica[(50, "?")] = "R29";
 
   tabelaSintatica[(51, "ARG")] = 52;
   tabelaSintatica[(51, "literal")] = "S53";
   tabelaSintatica[(51, "num")] = "S54";
   tabelaSintatica[(51, "id")] = "S55";
 
-  tabelaSintatica[(52, "?")] = "?";
+  tabelaSintatica[(52, "?")] = "R12";
 
-  tabelaSintatica[(53, "?")] = "?";
+  tabelaSintatica[(53, "?")] = "R13";
 
-  tabelaSintatica[(54, "?")] = "?";
+  tabelaSintatica[(54, "?")] = "R14";
 
-  tabelaSintatica[(55, "?")] = "?";
+  tabelaSintatica[(55, "?")] = "R15";
 
-  tabelaSintatica[(56, "?")] = "?";
+  tabelaSintatica[(56, "?")] = "R12";
 
-  tabelaSintatica[(57, "?")] = "?";
+  tabelaSintatica[(57, "?")] = "R11";
 
-  tabelaSintatica[(58, "?")] = "?";
+  tabelaSintatica[(58, "?")] = "R17";
 };
+
+export default tabelaSintatica;

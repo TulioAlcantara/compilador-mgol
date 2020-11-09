@@ -2,7 +2,7 @@ import obterTabelaSimbolos from "./tabelaSimbolos.js";
 import AutomatoFinitoDeterministico from "./afd.js";
 import { retornaHoraAtual } from "../index.js";
 
-export default analisadorLexico = (entradaLexica) => {
+const analisadorLexico = (entradaLexica) => {
   let afd = new AutomatoFinitoDeterministico();
   let tabelaSimbolos = obterTabelaSimbolos();
   let lexema = [];
@@ -177,3 +177,5 @@ const adicionaIdTabelaSimbolos = (tabelaSimbolos, lexema, token, tipo) => {
   };
   tabelaSimbolos.push(entrada);
 };
+
+export default analisadorLexico;
