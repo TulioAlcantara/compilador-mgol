@@ -19,9 +19,6 @@ const analisadorLexico = (entradaLexica) => {
 
   const textoOutput = document.querySelector("#output-codigo-fonte");
  
-
- 
-
   while (indice <= codigoFonte.length) {
     if (breakloop) break;
     if (qtdLeiturasInvalidas == 2) {

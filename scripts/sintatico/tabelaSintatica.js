@@ -184,7 +184,6 @@ const obterTabelaSintatica = () => {
   tabelaSintatica[[37, "opm"]] = "S41";
   tabelaSintatica[[37, "pt_v"]] = "R19";
 
-
   tabelaSintatica[[38, "pt_v"]] = "R19";
 
   tabelaSintatica[[39, "opm"]] = "R20";

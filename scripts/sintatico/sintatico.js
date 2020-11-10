@@ -2,6 +2,7 @@ import analisadorLexico from "../lexico/lexico.js";
 import gramatica from "./gramatica.js";
 import obterTabelaSintatica from "./tabelaSintatica.js";
 import { retornaHoraAtual } from "../index.js";
+import errosGramaticais from "./errosGramaticais.js";
 
 let pilhaEstados = [];
 let indiceAtual = 0;
@@ -43,9 +44,6 @@ const analisadorSintatico = (codigoFonte) => {
     //   obterProximoToken();
     //   continue;
     // }
-    if (tokenAtual == "fim") {
-      console.log("TESTE");
-    }
 
     if (leituraCodigoFonteFinalizada) break;
     let topoPilhaEstados = topoPilha();
@@ -82,7 +80,6 @@ const analisadorSintatico = (codigoFonte) => {
     } else {
       msgErroSintatico();
       modoPanico();
-      break;
     }
   }
   resetaParametros();
@@ -117,10 +114,12 @@ const modoPanico = () => {
 const atualizaEntradaLexica = (saidaLexica) => {
   if (saidaLexica) {
     indiceAtual = saidaLexica.indice;
+    linhaAtual = saidaLexica.linha;
+    colunaAtual = saidaLexica.coluna;
     let novaEntradaLexica = {
       indice: saidaLexica.indice,
-      coluna: saidaLexica.linha,
-      linha: saidaLexica.coluna,
+      coluna: saidaLexica.coluna,
+      linha: saidaLexica.linha,
       codigoFonte: codigoFonteString,
     };
     return novaEntradaLexica;
@@ -157,7 +156,7 @@ const msgSaindoModoPanico = () => {
 const msgErroSintatico = () => {
   document.querySelector(
     "#output-codigo-fonte"
-  ).value += `- ERRO SINTÁTICO: ${topoPilha()} => ${tokenAtual}\n`;
+  ).value += `- ERRO SINTÁTICO: ${errosGramaticais[topoPilha()]} (linha ${linhaAtual}, coluna ${colunaAtual})}\n`;
 };
 
 const msgCodigoFonteVazio = () =>{
