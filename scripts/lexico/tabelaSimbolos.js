@@ -32,7 +32,7 @@ const tabelaSimbolos = () => {
     novaEntrada = criaNovaEntrada("inteiro", "inteiro", "-");
     tabelaSimbolos.push(novaEntrada);
 
-    novaEntrada = criaNovaEntrada("lit", "lit", "-");
+    novaEntrada = criaNovaEntrada("literal", "literal", "-");
     tabelaSimbolos.push(novaEntrada);
 
     novaEntrada = criaNovaEntrada("real", "real", "-");

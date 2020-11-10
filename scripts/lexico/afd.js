@@ -67,6 +67,9 @@ class AutomatoFinitoDeterministico {
         this.tabelaTransicao[[4, "0"]] = [5, true, "Num"];
         this.tabelaTransicao[[5, "0"]] = [5, true, "Num"];
         //FALTA O EXPONENCIAL
+
+        //INDICADOR DE FIM DE CADEIA DO ANALISADOR SINTÁTICO
+        this.tabelaTransicao[[0, "$"]] = [31, true, "$"];
     }
 
     comparaEntradaComTabelaTransicao(estado, caracter) {
