@@ -45,6 +45,7 @@ const obterTabelaSintatica = () => {
 
   tabelaSintatica[[5, "$"]] = "R2";
 
+  tabelaSintatica[[6, "A"]] = 64;
   tabelaSintatica[[6, "CMD"]] = 7;
   tabelaSintatica[[6, "COND"]] = 8;
   tabelaSintatica[[6, "ES"]] = 6;
@@ -55,9 +56,10 @@ const obterTabelaSintatica = () => {
   tabelaSintatica[[6, "id"]] = "S12";
   tabelaSintatica[[6, "se"]] = "S14";
 
+  tabelaSintatica[[7, "A"]] = 65;
   tabelaSintatica[[7, "CMD"]] = 7;
   tabelaSintatica[[7, "COND"]] = 8;
-  tabelaSintatica[[7, "ES"]] = 9;
+  tabelaSintatica[[7, "ES"]] = 6;
   tabelaSintatica[[7, "CABEÇALHO"]] = 13;
   tabelaSintatica[[7, "fim"]] = "S9";
   tabelaSintatica[[7, "leia"]] = "S10";
@@ -65,9 +67,10 @@ const obterTabelaSintatica = () => {
   tabelaSintatica[[7, "id"]] = "S12";
   tabelaSintatica[[7, "se"]] = "S14";
 
+  tabelaSintatica[[8, "A"]] = 66;
   tabelaSintatica[[8, "CMD"]] = 7;
   tabelaSintatica[[8, "COND"]] = 8;
-  tabelaSintatica[[8, "ES"]] = 9;
+  tabelaSintatica[[8, "ES"]] = 6;
   tabelaSintatica[[8, "CABEÇALHO"]] = 13;
   tabelaSintatica[[8, "fim"]] = "S9";
   tabelaSintatica[[8, "leia"]] = "S10";
@@ -95,13 +98,8 @@ const obterTabelaSintatica = () => {
   tabelaSintatica[[13, "se"]] = "S14";
   tabelaSintatica[[13, "CABEÇALHO"]] = 13;
 
-
-  //TODO: TRATAR ABRE/FECHA PARENTESIS
   tabelaSintatica[[14, "ab_p"]] = "S62";
-  // tabelaSintatica[[14, "OPRD"]] = 43;
-  // tabelaSintatica[[14, "num"]] = "S40";
-  // tabelaSintatica[[14, "id"]] = "S39";
-
+ 
   tabelaSintatica[[15, "leia"]] = "R3";
   tabelaSintatica[[15, "escreva"]] = "R3";
   tabelaSintatica[[15, "id"]] = "R3";
@@ -170,13 +168,6 @@ const obterTabelaSintatica = () => {
   tabelaSintatica[[29, "COND"]] = 29;
   tabelaSintatica[[29, "escreva"]] = "S51";
   tabelaSintatica[[29, "fimse"]] = "S50";
-
-  // tabelaSintatica[[30, "leia"]] = "R29";
-  // tabelaSintatica[[30, "escreva"]] = "R29";
-  // tabelaSintatica[[30, "id"]] = "R29";
-  // tabelaSintatica[[30, "se"]] = "R29";
-  // tabelaSintatica[[30, "fim"]] = "R29";
-  // tabelaSintatica[[30, "fimse"]] = "R29";
 
   tabelaSintatica[[31, "pt_v"]] = "S60";
 
@@ -255,18 +246,11 @@ const obterTabelaSintatica = () => {
   tabelaSintatica[[50, "fim"]] = "R29";
   tabelaSintatica[[50, "fimse"]] = "R29";
 
-  tabelaSintatica[[51, "ARG"]] = 19; //PREVIAMENTE 52
+  tabelaSintatica[[51, "ARG"]] = 19; 
   tabelaSintatica[[51, "literal"]] = "S53";
   tabelaSintatica[[51, "num"]] = "S54";
   tabelaSintatica[[51, "id"]] = "S55";
   
-  // tabelaSintatica[[52, "leia"]] = "R12";
-  // tabelaSintatica[[52, "escreva"]] = "R12";
-  // tabelaSintatica[[52, "id"]] = "R12";
-  // tabelaSintatica[[52, "se"]] = "R12";
-  // tabelaSintatica[[52, "fim"]] = "R12";
-  // tabelaSintatica[[52, "fimse"]] = "R12";
-
   tabelaSintatica[[53, "pt_v"]] = "R13";
 
   tabelaSintatica[[54, "pt_v"]] = "R14";
@@ -311,6 +295,13 @@ const obterTabelaSintatica = () => {
   tabelaSintatica[[62, "id"]] = "S39";
 
   tabelaSintatica[[63, "entao"]] = "S44";
+
+  tabelaSintatica[[64, "$"]] = "R10";
+
+  tabelaSintatica[[65, "$"]] = "R16";
+
+  tabelaSintatica[[66, "$"]] = "R22";
+
 
   return tabelaSintatica;
 };

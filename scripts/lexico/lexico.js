@@ -18,17 +18,14 @@ const analisadorLexico = (entradaLexica) => {
   let codigoFonte = entradaLexica.codigoFonte;
 
   const textoOutput = document.querySelector("#output-codigo-fonte");
-  if (!validaCodigoFonte(entradaLexica.codigoFonte)) {
-    textoOutput.value += `${retornaHoraAtual()} - ERRO: Código fonte vazio\n`;
-    return;
-  }
+ 
 
  
 
   while (indice <= codigoFonte.length) {
     if (breakloop) break;
     if (qtdLeiturasInvalidas == 2) {
-      textoOutput.value += `${retornaHoraAtual()} - ERRO LÉXICO: linha ${linha}, coluna ${coluna}\n`;
+      textoOutput.value += `- ERRO LÉXICO: linha ${linha}, coluna ${coluna}\n`;
       indice++;
       coluna++;
       qtdLeiturasInvalidas = 0;
@@ -114,12 +111,7 @@ const analisadorLexico = (entradaLexica) => {
   return;
 };
 
-const validaCodigoFonte = (codigoFonte) => {
-  if (codigoFonte == undefined || !codigoFonte.trim().length) {
-    return false;
-  }
-  return true;
-};
+
 
 const mostraTabelaLexica = (bool) => {
   if (bool) {

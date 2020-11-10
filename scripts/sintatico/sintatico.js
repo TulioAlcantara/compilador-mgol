@@ -20,6 +20,11 @@ let entradaLexica = {
 };
 
 const analisadorSintatico = (codigoFonte) => {
+  if (!validaCodigoFonte(codigoFonte)) {
+    msgCodigoFonteVazio();
+    return;
+  }
+
   codigoFonteString = codigoFonte;
   codigoFonteString += "$";
   pilhaEstados.push("$");
@@ -33,7 +38,15 @@ const analisadorSintatico = (codigoFonte) => {
   obterProximoToken();
 
   while (1) {
-    if (tokenAtual == "ERRO") continue;
+    //TODO: ANALISAR CASO TOKEN TIPO ERRO
+    // if (tokenAtual == "ERRO") {
+    //   obterProximoToken();
+    //   continue;
+    // }
+    if (tokenAtual == "fim") {
+      console.log("TESTE");
+    }
+
     if (leituraCodigoFonteFinalizada) break;
     let topoPilhaEstados = topoPilha();
     let resultadoAcao = tabelaSintatica[[topoPilhaEstados, tokenAtual]];
@@ -46,7 +59,7 @@ const analisadorSintatico = (codigoFonte) => {
 
       // CASO SHIFT
       else if (resultadoAcao.charAt(0) == "S") {
-        let estadoShift  = parseInt(resultadoAcao.split("S")[1]);
+        let estadoShift = parseInt(resultadoAcao.split("S")[1]);
         pilhaEstados.push(estadoShift);
         obterProximoToken();
       }
@@ -60,21 +73,18 @@ const analisadorSintatico = (codigoFonte) => {
           pilhaEstados.pop();
         }
 
-        
-        let gotoTopoPilhaParaNaoTerminal = tabelaSintatica[[topoPilha(), gramatica[estadoReduce][0]]];
+        let gotoTopoPilhaParaNaoTerminal =
+          tabelaSintatica[[topoPilha(), gramatica[estadoReduce][0]]];
         pilhaEstados.push(gotoTopoPilhaParaNaoTerminal);
 
         msgProducaoGramatica(estadoReduce);
       }
     } else {
-      // document.querySelector(
-      //   "#output-codigo-fonte"
-      // ).value += `${retornaHoraAtual()} - ERRO SINTÁTICO: ${topoPilha} => ${tokenAtual}\n`;
-      // modoPanico();
+      msgErroSintatico();
+      modoPanico();
       break;
     }
   }
-  console.table(topoPilha(), tokenAtual)
   resetaParametros();
   return;
 };
@@ -120,28 +130,41 @@ const atualizaEntradaLexica = (saidaLexica) => {
 
 const msgProducaoGramatica = (numeroRegra) => {
   let producao = gramatica[numeroRegra];
-  // let stringProducao = `${producao[0]} => `;
-  // producao.forEach(item => {
+  let stringProducao = `${producao[0]} => `;
+  producao.forEach((item, index) => {
+    if (index != 0) {
+      stringProducao += `${item} `;
+    }
+  });
 
-  // });
-  console.log(producao);
-
-  // document.querySelector(
-  //   "#output-codigo-fonte"
-  // ).value += `${retornaHoraAtual()} - Iniciando analise léxica...\n`;
+  document.querySelector(
+    "#output-codigo-fonte"
+  ).value += `- Produção da gramática: ${stringProducao}\n`;
 };
 
 const msgEntrandoModoPanico = () => {
   document.querySelector(
     "#output-codigo-fonte"
-  ).value += `${retornaHoraAtual()} - Entrando no Modo Pânico...\n`;
+  ).value += `- Entrando no Modo Pânico...\n`;
 };
 
 const msgSaindoModoPanico = () => {
   document.querySelector(
     "#output-codigo-fonte"
-  ).value += `${retornaHoraAtual()} - Saindo do Modo Pânico...\n`;
+  ).value += `- Saindo do Modo Pânico...\n`;
 };
+
+const msgErroSintatico = () => {
+  document.querySelector(
+    "#output-codigo-fonte"
+  ).value += `- ERRO SINTÁTICO: ${topoPilha()} => ${tokenAtual}\n`;
+};
+
+const msgCodigoFonteVazio = () =>{
+  document.querySelector(
+    "#output-codigo-fonte"
+  ).value += `- ERRO: Código fonte vazio\n`;
+}
 
 const resetaParametros = () => {
   pilhaEstados = [];
@@ -157,8 +180,15 @@ const resetaParametros = () => {
   leituraCodigoFonteFinalizada = false;
 };
 
-const topoPilha = () =>{
-  return pilhaEstados[pilhaEstados.length-1];
-}
+const topoPilha = () => {
+  return pilhaEstados[pilhaEstados.length - 1];
+};
+
+const validaCodigoFonte = (codigoFonte) => {
+  if (codigoFonte == undefined || !codigoFonte.trim().length) {
+    return false;
+  }
+  return true;
+};
 
 export default analisadorSintatico;
