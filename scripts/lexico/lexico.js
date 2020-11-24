@@ -11,6 +11,7 @@ const analisadorLexico = (entradaLexica) => {
   let token = "";
   let breakloop = false;
   let qtdLeiturasInvalidas = 0;
+  let lexemaDesconhecido = "";
 
   let indice = entradaLexica.indice;
   let linha = entradaLexica.linha;
@@ -18,23 +19,49 @@ const analisadorLexico = (entradaLexica) => {
   let codigoFonte = entradaLexica.codigoFonte;
 
   const textoOutput = document.querySelector("#output-codigo-fonte");
- 
+
   while (indice <= codigoFonte.length) {
+    //VALIDA ERROS DE ASPAS E CHAVES NÃO FECHADAS
+    if (indice == codigoFonte.length) {
+      if (estadoAfd == 13) {
+        textoOutput.value += `- ERRO LÉXICO: Literal sem aspas fechadas (linha ${linha}, coluna ${coluna})\n`;
+        criaNovaLinhaTabelaLexica("ERRO", "ERRO", "");
+
+        return {
+          indice: indice,
+          tabelaSimbolos: tabelaSimbolos,
+          token: "ERRO",
+          linha: linha,
+          coluna: coluna,
+        };
+      } else if (estadoAfd == 20) {
+        textoOutput.value += `- ERRO LÉXICO: Comentário sem chaves fechadas (linha ${linha}, coluna ${coluna})\n`;
+        criaNovaLinhaTabelaLexica("ERRO", "ERRO", "");
+
+        return {
+          indice: indice,
+          tabelaSimbolos: tabelaSimbolos,
+          token: "ERRO",
+          linha: linha,
+          coluna: coluna,
+        };
+      }
+    }
+
     if (breakloop) break;
     if (qtdLeiturasInvalidas == 2) {
-      textoOutput.value += `- ERRO LÉXICO: linha ${linha}, coluna ${coluna}\n`;
+      textoOutput.value += `- ERRO LÉXICO: Símbolo ${lexemaDesconhecido} desconhecido (linha ${linha}, coluna ${coluna})\n`;
       indice++;
       coluna++;
       qtdLeiturasInvalidas = 0;
-     
+
       // TODO: ADICIONAR LEXEMA DE ERRO E TOKEN "ERRO"
-      // lexema = lexema.join("");
       criaNovaLinhaTabelaLexica("ERRO", "ERRO", "");
-      
+
       return {
         indice: indice,
         tabelaSimbolos: tabelaSimbolos,
-        token: token || "ERRO",
+        token: "ERRO",
         linha: linha,
         coluna: coluna,
       };
@@ -82,7 +109,9 @@ const analisadorLexico = (entradaLexica) => {
           token = entradaTabelaSimbolos.token;
         }
 
-        criaNovaLinhaTabelaLexica(lexema, token, "");
+        if(lexema != "$"){
+          criaNovaLinhaTabelaLexica(lexema, token, "");
+        }
         if (token == "id") {
           adicionaIdTabelaSimbolos(tabelaSimbolos, lexema, token, "");
         }
@@ -90,13 +119,13 @@ const analisadorLexico = (entradaLexica) => {
         return {
           indice: indice,
           tabelaSimbolos: tabelaSimbolos,
-          token: token || "ERRO",
+          token: token,
           linha: linha,
           coluna: coluna,
         };
-
       } else {
         estadoAfd = 0;
+        lexemaDesconhecido = caracter;
         lexema = [];
         ehAceitacao = false;
         qtdLeiturasInvalidas++;
@@ -107,8 +136,6 @@ const analisadorLexico = (entradaLexica) => {
 
   return;
 };
-
-
 
 const mostraTabelaLexica = (bool) => {
   if (bool) {

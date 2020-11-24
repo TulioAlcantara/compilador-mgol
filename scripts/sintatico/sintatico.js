@@ -21,13 +21,15 @@ let entradaLexica = {
 };
 
 const analisadorSintatico = (codigoFonte) => {
+  resetaParametros();
+
   if (!validaCodigoFonte(codigoFonte)) {
     msgCodigoFonteVazio();
     return;
   }
 
   codigoFonteString = codigoFonte;
-  codigoFonteString += "$";
+  codigoFonteString += " $";
   pilhaEstados.push("$");
   pilhaEstados.push(0);
 
@@ -39,11 +41,11 @@ const analisadorSintatico = (codigoFonte) => {
   obterProximoToken();
 
   while (1) {
-    //TODO: ANALISAR CASO TOKEN TIPO ERRO
-    // if (tokenAtual == "ERRO") {
-    //   obterProximoToken();
-    //   continue;
-    // }
+    if (tokenAtual == "erro") {
+      obterProximoToken();
+      if(indiceAtual == codigoFonteString.length) break;
+      continue;
+    }
 
     if (leituraCodigoFonteFinalizada) break;
     let topoPilhaEstados = topoPilha();
@@ -79,7 +81,8 @@ const analisadorSintatico = (codigoFonte) => {
       }
     } else {
       msgErroSintatico();
-      modoPanico();
+      break;
+      // modoPanico();
     }
   }
   resetaParametros();
@@ -97,18 +100,18 @@ const obterProximoToken = () => {
 const modoPanico = () => {
   msgEntrandoModoPanico();
   while (1) {
-    if (tokenAtual == "pt_v" || tokenAtual == "fim") {
+    listaTokenAtual = topoPilha()
+    if (tokenAtual == "pt_v" || tokenAtual == "fim") {Q
+      // obterProximoToken();
       break;
     } else if (indiceAtual == codigoFonteString.length) {
       leituraCodigoFonteFinalizada = true;
-      msgSaindoModoPanico();
       break;
     } else {
-      msgSaindoModoPanico();
-      break;
+      obterProximoToken();
     }
   }
-  obterProximoToken();
+  msgSaindoModoPanico();
 };
 
 const atualizaEntradaLexica = (saidaLexica) => {
@@ -154,16 +157,17 @@ const msgSaindoModoPanico = () => {
 };
 
 const msgErroSintatico = () => {
-  document.querySelector(
-    "#output-codigo-fonte"
-  ).value += `- ERRO SINTÁTICO: ${errosGramaticais[topoPilha()]} (linha ${linhaAtual}, coluna ${colunaAtual})}\n`;
+  document.querySelector("#output-codigo-fonte").value += `- ERRO SINTÁTICO: ${
+    errosGramaticais[topoPilha()]
+  } (linha ${linhaAtual}, coluna ${colunaAtual}) \n`;
+  // / ULTIMO ESTADO: ${topoPilha()}, ULTIMO TOKEN: ${tokenAtual}
 };
 
-const msgCodigoFonteVazio = () =>{
+const msgCodigoFonteVazio = () => {
   document.querySelector(
     "#output-codigo-fonte"
   ).value += `- ERRO: Código fonte vazio\n`;
-}
+};
 
 const resetaParametros = () => {
   pilhaEstados = [];
