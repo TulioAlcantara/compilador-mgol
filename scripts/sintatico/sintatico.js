@@ -3,14 +3,21 @@ import gramatica from "./gramatica.js";
 import obterTabelaSintatica from "./tabelaSintatica.js";
 import { retornaHoraAtual } from "../index.js";
 import errosGramaticais from "./errosGramaticais.js";
+import obterTabelaSimbolos from "../lexico/tabelaSimbolos.js";
+import semantico from "../semantico/semantico.js";
 
 let pilhaEstados = [];
+let pilhaAtributos = [];
 let indiceAtual = 0;
 let colunaAtual = 0;
 let linhaAtual = 0;
 let tokenAtual = "";
+let lexemaAtual = "";
+let tipoAtual = "";
 let codigoFonteString = "";
+let codigoObjeto;
 let tabelaSintatica = obterTabelaSintatica();
+let tabelaSimbolos = obterTabelaSimbolos();
 let saidaLexica;
 let leituraCodigoFonteFinalizada = false;
 let entradaLexica = {
@@ -18,6 +25,7 @@ let entradaLexica = {
   linha: 0,
   coluna: 0,
   codigoFonte: "",
+  tabelaSimbolos: tabelaSimbolos,
 };
 
 const analisadorSintatico = (codigoFonte) => {
@@ -43,7 +51,7 @@ const analisadorSintatico = (codigoFonte) => {
   while (1) {
     if (tokenAtual == "erro") {
       obterProximoToken();
-      if(indiceAtual == codigoFonteString.length) break;
+      if (indiceAtual == codigoFonteString.length) break;
       continue;
     }
 
@@ -61,6 +69,10 @@ const analisadorSintatico = (codigoFonte) => {
       else if (resultadoAcao.charAt(0) == "S") {
         let estadoShift = parseInt(resultadoAcao.split("S")[1]);
         pilhaEstados.push(estadoShift);
+        pilhaAtributos.push(lexemaAtual);
+        // if (tokenAtual == "id") {
+        //   pilhaAtributos.push(lexemaAtual);
+        // }
         obterProximoToken();
       }
 
@@ -68,14 +80,26 @@ const analisadorSintatico = (codigoFonte) => {
       else if (resultadoAcao.charAt(0) == "R") {
         let estadoReduce = parseInt(resultadoAcao.split("R")[1]);
         let tamanhoProducao = gramatica[estadoReduce].length - 1;
+        let naoTerminal = gramatica[estadoReduce][0];
+
+        let retornoSemantico = semantico(
+          estadoReduce,
+          naoTerminal,
+          tabelaSimbolos,
+          pilhaAtributos
+        );
+        tabelaSimbolos = retornoSemantico.novaTabelaSimbolos;
+        codigoObjeto = retornoSemantico.codigoObjeto;
 
         for (let i = 0; i < tamanhoProducao; i++) {
           pilhaEstados.pop();
+          // pilhaAtributos.pop();
         }
 
         let gotoTopoPilhaParaNaoTerminal =
           tabelaSintatica[[topoPilha(), gramatica[estadoReduce][0]]];
         pilhaEstados.push(gotoTopoPilhaParaNaoTerminal);
+        // pilhaAtributos.push(lexemaAtual);
 
         msgProducaoGramatica(estadoReduce);
       }
@@ -86,6 +110,7 @@ const analisadorSintatico = (codigoFonte) => {
     }
   }
   resetaParametros();
+  console.log(codigoObjeto);
   return;
 };
 
@@ -100,8 +125,9 @@ const obterProximoToken = () => {
 const modoPanico = () => {
   msgEntrandoModoPanico();
   while (1) {
-    listaTokenAtual = topoPilha()
-    if (tokenAtual == "pt_v" || tokenAtual == "fim") {Q
+    listaTokenAtual = topoPilha();
+    if (tokenAtual == "pt_v" || tokenAtual == "fim") {
+      Q;
       // obterProximoToken();
       break;
     } else if (indiceAtual == codigoFonteString.length) {
@@ -119,11 +145,14 @@ const atualizaEntradaLexica = (saidaLexica) => {
     indiceAtual = saidaLexica.indice;
     linhaAtual = saidaLexica.linha;
     colunaAtual = saidaLexica.coluna;
+    lexemaAtual = saidaLexica.lexema;
+    tipoAtual = saidaLexica.tipo;
     let novaEntradaLexica = {
       indice: saidaLexica.indice,
       coluna: saidaLexica.coluna,
       linha: saidaLexica.linha,
       codigoFonte: codigoFonteString,
+      tabelaSimbolos: saidaLexica.tabelaSimbolos,
     };
     return novaEntradaLexica;
   }
@@ -145,15 +174,11 @@ const msgProducaoGramatica = (numeroRegra) => {
 };
 
 const msgEntrandoModoPanico = () => {
-  document.querySelector(
-    "#output-codigo-fonte"
-  ).value += `- Entrando no Modo Pânico...\n`;
+  document.querySelector("#output-codigo-fonte").value += `- Entrando no Modo Pânico...\n`;
 };
 
 const msgSaindoModoPanico = () => {
-  document.querySelector(
-    "#output-codigo-fonte"
-  ).value += `- Saindo do Modo Pânico...\n`;
+  document.querySelector("#output-codigo-fonte").value += `- Saindo do Modo Pânico...\n`;
 };
 
 const msgErroSintatico = () => {
@@ -164,9 +189,7 @@ const msgErroSintatico = () => {
 };
 
 const msgCodigoFonteVazio = () => {
-  document.querySelector(
-    "#output-codigo-fonte"
-  ).value += `- ERRO: Código fonte vazio\n`;
+  document.querySelector("#output-codigo-fonte").value += `- ERRO: Código fonte vazio\n`;
 };
 
 const resetaParametros = () => {
