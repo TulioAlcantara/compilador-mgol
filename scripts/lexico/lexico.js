@@ -36,6 +36,7 @@ const analisadorLexico = (entradaLexica) => {
           linha: linha,
           coluna: coluna,
           lexema: lexema,
+          tipo: tipo,
         };
       } else if (estadoAfd == 20) {
         textoOutput.value += `- ERRO LÉXICO: Comentário sem chaves fechadas (linha ${linha}, coluna ${coluna})\n`;
@@ -48,6 +49,7 @@ const analisadorLexico = (entradaLexica) => {
           linha: linha,
           coluna: coluna,
           lexema: lexema,
+          tipo: tipo,
         };
       }
     }
@@ -68,6 +70,7 @@ const analisadorLexico = (entradaLexica) => {
         linha: linha,
         coluna: coluna,
         lexema: lexema,
+        tipo: tipo,
       };
     }
 
@@ -129,6 +132,7 @@ const analisadorLexico = (entradaLexica) => {
           linha: linha,
           coluna: coluna,
           lexema: lexema,
+          tipo: tipo,
         };
       } else {
         estadoAfd = 0;

@@ -5,6 +5,7 @@ import { retornaHoraAtual } from "../index.js";
 import errosGramaticais from "./errosGramaticais.js";
 import obterTabelaSimbolos from "../lexico/tabelaSimbolos.js";
 import semantico from "../semantico/semantico.js";
+import {finalizaCodigoObjeto} from "../semantico/semantico.js";
 
 let pilhaEstados = [];
 let pilhaAtributos = [];
@@ -69,7 +70,7 @@ const analisadorSintatico = (codigoFonte) => {
       else if (resultadoAcao.charAt(0) == "S") {
         let estadoShift = parseInt(resultadoAcao.split("S")[1]);
         pilhaEstados.push(estadoShift);
-        pilhaAtributos.push(lexemaAtual);
+        pilhaAtributos.push([lexemaAtual, tokenAtual, tipoAtual]);
         // if (tokenAtual == "id") {
         //   pilhaAtributos.push(lexemaAtual);
         // }
@@ -109,8 +110,10 @@ const analisadorSintatico = (codigoFonte) => {
       // modoPanico();
     }
   }
-  resetaParametros();
+  codigoObjeto = finalizaCodigoObjeto(codigoObjeto);
   console.log(codigoObjeto);
+  downloadArquivoCompilado();
+  resetaParametros();
   return;
 };
 
@@ -216,5 +219,15 @@ const validaCodigoFonte = (codigoFonte) => {
   }
   return true;
 };
+
+const downloadArquivoCompilado = () =>{
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(codigoObjeto));
+    element.setAttribute('download', "PROGRAMA.C");
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+}
 
 export default analisadorSintatico;

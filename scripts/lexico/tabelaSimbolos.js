@@ -54,28 +54,32 @@ const criaNovaEntrada = (lexema, token, tipo) => {
   return entrada;
 };
 
-const criaNovaEntradaNaoTerminal= (lexema, token, tipo, nome) => {
-    let entrada = {
-      lexema: lexema,
-      token: token,
-      tipo: tipo,
-      nome: nome,
-    };
-    return entrada;
+const criaNovaEntradaNaoTerminal = (lexema, token, tipo, nome) => {
+  let entrada = {
+    lexema: lexema,
+    token: token,
+    tipo: tipo,
+    nome: nome,
   };
+  return entrada;
+};
 
 const insereNaoTerminais = (tabelaSimbolos) => {
   let naoTerminaisJaRegistrados = [];
   let naoTerminalAtual;
   let novaEntrada;
   Object.keys(gramatica).forEach((regraGramatical) => {
-      naoTerminalAtual = gramatica[regraGramatical][0];
-      if(!naoTerminaisJaRegistrados.includes(naoTerminalAtual)){
-        novaEntrada = criaNovaEntradaNaoTerminal("", "", "", `NAO_TERMINAL_${naoTerminalAtual}`);
-        tabelaSimbolos.push(novaEntrada);
-      }
-      naoTerminaisJaRegistrados.push(naoTerminalAtual);
+    naoTerminalAtual = gramatica[regraGramatical][0];
+    if (!naoTerminaisJaRegistrados.includes(naoTerminalAtual)) {
+      novaEntrada = criaNovaEntradaNaoTerminal("", "", "", `NAO_TERMINAL_${naoTerminalAtual}`);
+      tabelaSimbolos.push(novaEntrada);
+    }
+    naoTerminaisJaRegistrados.push(naoTerminalAtual);
   });
+
+  //ADICIONA SEGUNDO OPRD PARA GARANTIR QUE SEMÂNTICO FUNCIONE
+  novaEntrada = criaNovaEntradaNaoTerminal("", "", "", "NAO_TERMINAL_OPRD2");
+  tabelaSimbolos.push(novaEntrada);
 };
 
 export default tabelaSimbolos;

@@ -61,11 +61,11 @@ class AutomatoFinitoDeterministico {
         this.tabelaTransicao[[13, '"']] = [14, true, "Literal", ""];
 
         //CONSTANTE NUMÉRICA
-        this.tabelaTransicao[[0, "0"]] = [7, true, "Num", ""];
-        this.tabelaTransicao[[7, "0"]] = [7, true, "Num", ""];
+        this.tabelaTransicao[[0, "0"]] = [7, true, "Num", "int"];
+        this.tabelaTransicao[[7, "0"]] = [7, true, "Num", "int"];
         this.tabelaTransicao[[7, "."]] = [4, false, "", ""];
-        this.tabelaTransicao[[4, "0"]] = [5, true, "Num", ""];
-        this.tabelaTransicao[[5, "0"]] = [5, true, "Num", ""];
+        this.tabelaTransicao[[4, "0"]] = [5, true, "Num", "double"];
+        this.tabelaTransicao[[5, "0"]] = [5, true, "Num", "double"];
         //FALTA O EXPONENCIAL
 
         //INDICADOR DE FIM DE CADEIA DO ANALISADOR SINTÁTICO
